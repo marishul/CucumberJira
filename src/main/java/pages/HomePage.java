@@ -11,7 +11,7 @@ public class HomePage {
 
     public boolean onPage(){
         WebDriverWait wait = new WebDriverWait(WebDriverFactory.getDriver(), Duration.ofSeconds(5).getSeconds());
-        return wait.until(presenceOfElementLocated(By.id("browse_link"))).isDisplayed();
+        return wait.until(presenceOfElementLocated(By.xpath("//*[contains(text(), 'WEBINAR')]"))).isDisplayed();
     }
 
     public boolean errorLogin(){

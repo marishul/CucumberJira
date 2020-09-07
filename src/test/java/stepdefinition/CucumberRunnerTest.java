@@ -1,6 +1,6 @@
 package stepdefinition;
-
 import io.cucumber.testng.CucumberOptions;
+import io.cucumber.testng.AbstractTestNGCucumberTests;
 
 @CucumberOptions(
         strict = true,
@@ -11,6 +11,5 @@ import io.cucumber.testng.CucumberOptions;
         tags = ("@Regression")
 )
 
-public class CucumberRunnerTest {
-
-}
+public class CucumberRunnerTest extends AbstractTestNGCucumberTests {
+    }

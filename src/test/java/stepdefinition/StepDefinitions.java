@@ -9,8 +9,10 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import pages.HomePage;
+import pages.CreateModal;
 import pages.LoginPage;
 import utils.WebDriverFactory;
+import static org.testng.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,7 +39,7 @@ public class StepDefinitions {
 
     public void takeScreenshot() throws IOException {
         File scrFile = ((TakesScreenshot) WebDriverFactory.getDriver()).getScreenshotAs(OutputType.FILE);
-        File trgtFile = new File(System.getProperty("user.dir") + "//screenshots/screenshot.png");
+        File trgtFile = new File(System.getProperty("user.dir") + "//screenshots/screenshot_" + java.time.LocalTime.now() + ".png");
         System.out.println("SAVING Screenshot to " + trgtFile.getAbsolutePath());
         trgtFile.getParentFile().mkdir();
         trgtFile.createNewFile();
@@ -49,7 +51,7 @@ public class StepDefinitions {
         new LoginPage().navigateTo();
     }
 
-    @Then("^I enter user name - \"(.*?)\"$")
+    @Then("^I enter username - \"(.*?)\"$")
     public void enterUserName(String userName) {
         new LoginPage().enterUserName(userName);
     }
@@ -78,4 +80,52 @@ public class StepDefinitions {
     public void debug() {
         int a = 0;
     }
+
+    @Then("^I enter user name ([^\"]*)$")
+    public void enterLogin(String username) {
+        new LoginPage().enterUserName(username);
+    }
+
+    @Then("^I enter pass ([^\"]*)$")
+    public void enterPass(String password) {
+        new LoginPage().enterPassword(password);
+    }
+
+    @Then("^I click Create button")
+    public void clickOnCreateButton() {
+        assertTrue(new CreateModal().isTicketPannelPresent());
+        new CreateModal().clickOnCreateButton();
+    }
+
+    @Then("^I set project field")
+    public void setProject() {
+        new CreateModal().setProjectField();
+    }
+
+    @Then("^I set issue type")
+    public void setIssue() {
+        new CreateModal().setIssueType();
+    }
+
+    @Then("^I set summary - \"(.*?)\"$")
+    public void setSummary(String summary) {
+        new CreateModal().setSummary(summary);
+
+    }
+
+    @Then("^I set reporter")
+    public void setReporter() {
+        new CreateModal().setReporter();
+    }
+
+    @Then("^I click on Submit button")
+    public void clickSubmit() {
+    }
+
+    @Then("^Ticket is created and popup appeared")
+    public void ticketCreated() {
+        assert new CreateModal().isSuccessfulCreatedPopUp();
+        assert new CreateModal().ticketHasWebinar();
+    }
+
 }
